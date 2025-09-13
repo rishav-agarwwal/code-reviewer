@@ -1,13 +1,13 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable is not set.");
-}
+export async function reviewCode(code: string, language: string, apiKey: string): Promise<string> {
+    if (!apiKey) {
+        throw new Error("API Key is missing.");
+    }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey });
 
-export async function reviewCode(code: string, language: string): Promise<string> {
     const prompt = `
         Act as an expert senior software engineer and a meticulous code reviewer.
         Provide a detailed, constructive code review for the following ${language} code.
